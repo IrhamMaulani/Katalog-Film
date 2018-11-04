@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/linear_layout_film_item"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <ImageView
+        android:id="@+id/img_view_film_item"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:scaleType="centerCrop"
+        android:layout_height="100dp"
+        android:src="@drawable/poster" />
+
+    <LinearLayout
+        android:layout_weight="5"
+        android:layout_width="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/judul_film"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Judul"
+            android:textColor="@color/Black"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+            <TextView
+                android:textSize="14sp"
+                android:layout_marginTop="2dp"
+                android:id="@+id/deskripsi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Deskripsi"
+                android:maxLength="50"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textStyle="bold"/>
+
+        <TextView
+            android:layout_marginTop="1dp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/LimeGreen"
+            android:id="@+id/waktu_release"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginBottom="4dp"
+            android:text="Release" />
+
+        <TextView
+            android:layout_marginTop="1dp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/Teal"
+            android:id="@+id/skor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="2dp"
+            android:text="Skor" />
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
