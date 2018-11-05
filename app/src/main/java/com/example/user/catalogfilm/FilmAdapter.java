@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 
@@ -82,28 +82,29 @@ public class FilmAdapter extends BaseAdapter{
         holder.textViewSkor.setText("Rating : " + mData.get(position).getSkorFilm());
 
         String url = "https://image.tmdb.org/t/p/w185";
-
-
-
         Glide.with(context).load(url+mData.get(position).getGambar()).into(holder.gambarSampul);
+
+
         holder.listViewFilmItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = mData.get(position).getJudul();
-                String overview = mData.get(position).getOverview();
-                String tanggalRilis = mData.get(position).getTanggalRilis();
+
+                FilmItems filmItems = new FilmItems();
+
+                filmItems.setJudul(mData.get(position).getJudul());
+                filmItems.setOverview(mData.get(position).getOverview());
+                filmItems.setTanggalRilis(mData.get(position).getTanggalRilis());
+
                 String posterPath = mData.get(position).getGambar();
                 String posterUrl =  "https://image.tmdb.org/t/p/w342" + posterPath;
-                String skor = mData.get(position).getSkorFilm();
-                Intent intent = new Intent(view.getContext(), DetailFilmActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("EXTRA_TITLE",title);
-                bundle.putString("EXTRA_OVERVIEW",overview);
-                bundle.putString("EXTRA_POSTER_URL",posterUrl);
-                bundle.putString("EXTRA_SKOR",skor);
-                bundle.putString("EXTRA_TANGGAl",tanggalRilis);
-                intent.putExtras(bundle);
-                view.getContext().startActivity(intent);
+                filmItems.setGambar(posterUrl);
+
+                filmItems.setSkorFilm(mData.get(position).getSkorFilm());
+
+                Intent moveWithObjectIntent = new Intent(view.getContext(), DetailFilmActivity.class);
+                moveWithObjectIntent.putExtra(DetailFilmActivity.EXTRA_FILM, filmItems);
+                view.getContext().startActivity(moveWithObjectIntent);
+
             }
         });
 

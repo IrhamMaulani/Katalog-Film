@@ -1,10 +1,13 @@
 package com.example.user.catalogfilm;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 
-public class FilmItems {
+public class FilmItems implements Parcelable {
     private int id;
     private String judul;
     private String overview;
@@ -28,6 +31,10 @@ public class FilmItems {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public FilmItems() {
+
     }
 
     public int getId() {
@@ -77,4 +84,41 @@ public class FilmItems {
     public void setSkorFilm(String skorFilm) {
         this.skorFilm = skorFilm;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.judul);
+        dest.writeString(this.overview);
+        dest.writeString(this.tanggalRilis);
+        dest.writeString(this.gambar);
+        dest.writeString(this.skorFilm);
+    }
+
+    protected FilmItems(Parcel in) {
+        this.id = in.readInt();
+        this.judul = in.readString();
+        this.overview = in.readString();
+        this.tanggalRilis = in.readString();
+        this.gambar = in.readString();
+        this.skorFilm = in.readString();
+    }
+
+    public static final Parcelable.Creator<FilmItems> CREATOR = new Parcelable.Creator<FilmItems>() {
+        @Override
+        public FilmItems createFromParcel(Parcel source) {
+            return new FilmItems(source);
+        }
+
+        @Override
+        public FilmItems[] newArray(int size) {
+            return new FilmItems[size];
+        }
+    };
 }

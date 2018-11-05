@@ -3,6 +3,7 @@ package com.example.user.catalogfilm;
 import android.content.AsyncTaskLoader;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
@@ -52,18 +53,14 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<FilmItems>> {
             mHasResult = false;
         }
     }
-
     private static final String API_KEY = "7cd1d8fb02b9a93c41f413b0e5143765";
 
-
-    // Format search kota url JAKARTA = 1642911 ,BANDUNG = 1650357, SEMARANG = 1627896
-    // http://api.openweathermap.org/data/2.5/group?id=1642911,1650357,1627896&units=metric&appid=API_KEY
 
     @Override
     public ArrayList<FilmItems> loadInBackground() {
         SyncHttpClient client = new SyncHttpClient();
 
-        films = "a";
+
 
         final ArrayList<FilmItems> filmItemses = new ArrayList<>();
         String url = "https://api.themoviedb.org/3/search/movie?api_key=" +
@@ -99,6 +96,8 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<FilmItems>> {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 //Jika response gagal maka , do nothing
+
+
             }
         });
 

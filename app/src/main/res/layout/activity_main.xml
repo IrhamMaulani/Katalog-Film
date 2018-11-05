@@ -20,7 +20,6 @@
             android:id="@+id/edit_film"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-
             android:hint="Masukan Judul Film "
             android:layout_weight="0.8"/>
         <Button

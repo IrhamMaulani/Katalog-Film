@@ -8,16 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
+
 
 public class DetailFilmActivity extends AppCompatActivity {
 
 
-    public static String EXTRA_TITLE = "extra_title";
-    public static String EXTRA_OVERVIEW = "extra_overview";
-    public static String EXTRA_POSTER_URL = "extra_poster_url";
-    public static String EXTRA_SKOR = "extra_skor";
-    public static String EXTRA_TANGGAl = "extra_vote";
+    public static String EXTRA_FILM= "extra_person";
     private Context context;
 
 
@@ -39,19 +35,15 @@ public class DetailFilmActivity extends AppCompatActivity {
         textTanggal = findViewById(R.id.txt_tanggal);
         imageSampul = findViewById(R.id.header_cover_image);
 
-        EXTRA_TITLE = getIntent().getStringExtra("EXTRA_TITLE");
-        EXTRA_OVERVIEW = getIntent().getStringExtra("EXTRA_OVERVIEW");
-        EXTRA_POSTER_URL = getIntent().getStringExtra("EXTRA_POSTER_URL");
-        EXTRA_SKOR = getIntent().getStringExtra("EXTRA_SKOR");
-        EXTRA_TANGGAl = getIntent().getStringExtra("EXTRA_TANGGAl");
+        FilmItems filmItems = getIntent().getParcelableExtra(EXTRA_FILM);
 
-        textJudul.setText(EXTRA_TITLE);
-        textSkor.setText(EXTRA_SKOR);
-        textTanggal.setText("Release Date : " + EXTRA_TANGGAl);
-        textPreview.setText(EXTRA_OVERVIEW);
+        textJudul.setText(filmItems.getJudul());
+        textSkor.setText(filmItems.getSkorFilm());
+        textTanggal.setText("Release Date : " + filmItems.getTanggalRilis());
+        textPreview.setText(filmItems.getOverview());
 
-Log.i("isi dari image",EXTRA_POSTER_URL);
-        Picasso.with(context).load(EXTRA_POSTER_URL).into(imageSampul);
+
+        Glide.with(context).load(filmItems.getGambar()).into(imageSampul);
 
 
     }
