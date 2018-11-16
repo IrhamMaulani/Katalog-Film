@@ -1,39 +1,40 @@
-package com.example.user.catalogfilm;
+package com.example.user.catalogfilm.Activity;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.user.catalogfilm.FilmItems;
+import com.example.user.catalogfilm.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class DetailFilmActivity extends AppCompatActivity {
 
 
     public static String EXTRA_FILM= "extra_person";
+
+
+    @BindView(R.id.txt_judul) TextView textJudul;
+    @BindView(R.id.txt_skor) TextView textSkor;
+    @BindView(R.id.txt_overview) TextView textPreview;
+    @BindView(R.id.txt_tanggal) TextView textTanggal;
+    @BindView(R.id.header_cover_image) ImageView imageSampul;
     private Context context;
-
-
-    TextView textJudul;
-    TextView textSkor;
-    TextView textPreview;
-    TextView textTanggal;
-    ImageView imageSampul;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_film);
+        ButterKnife.bind(this);
 
         context=DetailFilmActivity.this;
 
-        textJudul = findViewById(R.id.txt_judul);
-        textSkor = findViewById(R.id.txt_skor);
-        textPreview = findViewById(R.id.txt_overview);
-        textTanggal = findViewById(R.id.txt_tanggal);
-        imageSampul = findViewById(R.id.header_cover_image);
+
 
         FilmItems filmItems = getIntent().getParcelableExtra(EXTRA_FILM);
 

@@ -21,7 +21,7 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<FilmItems>> {
 
     private String films ;
 
-    MyAsyncTaskLoader(final Context context, String films) {
+    public MyAsyncTaskLoader(final Context context, String films) {
         super(context);
 
         onContentChanged();

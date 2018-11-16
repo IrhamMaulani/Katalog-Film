@@ -1,8 +1,7 @@
-package com.example.user.catalogfilm;
+package com.example.user.catalogfilm.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.user.catalogfilm.Activity.DetailFilmActivity;
+import com.example.user.catalogfilm.FilmItems;
+import com.example.user.catalogfilm.R;
 
 
 import java.util.ArrayList;
