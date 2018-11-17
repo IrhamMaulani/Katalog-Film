@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.user.catalogfilm.FilmItems;
+import com.example.user.catalogfilm.Model.FilmItems;
 import com.example.user.catalogfilm.R;
 
 import butterknife.BindView;

@@ -1,37 +1,29 @@
-package com.example.user.catalogfilm;
+package com.example.user.catalogfilm.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.json.JSONObject;
-
-import java.text.DecimalFormat;
+import com.google.gson.annotations.SerializedName;
 
 public class FilmItems implements Parcelable {
+    @SerializedName("id")
     private int id;
+
+    @SerializedName("title")
     private String judul;
+
+    @SerializedName("overview")
     private String overview;
+
+    @SerializedName("release_date")
     private String tanggalRilis;
+
+    @SerializedName("poster_path")
     private String gambar;
+
+    @SerializedName("vote_average")
     private String skorFilm;
-    public  FilmItems(JSONObject object){
-        try {
-            int id = object.getInt("id");
-            String judul = object.getString("title");
-            String overview = object.getString("overview");
-            String tanggalRilis =  object.getString("release_date");
-            String gambar = object.getString("poster_path");
-            String skorFilm = object.getString("vote_average");
-            this.id = id;
-            this.judul = judul;
-            this.overview = overview;
-            this.tanggalRilis = tanggalRilis;
-            this.gambar = gambar;
-            this.skorFilm = skorFilm;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+
 
     public FilmItems() {
 
