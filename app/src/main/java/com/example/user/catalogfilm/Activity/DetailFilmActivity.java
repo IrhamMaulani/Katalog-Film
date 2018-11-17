@@ -40,12 +40,16 @@ public class DetailFilmActivity extends AppCompatActivity {
 
         textJudul.setText(filmItems.getJudul());
         textSkor.setText(filmItems.getSkorFilm());
-        textTanggal.setText("Release Date : " + filmItems.getTanggalRilis());
+        textTanggal.setText(String.format("%s%s", getString(R.string.release_date), filmItems.getTanggalRilis()));
         textPreview.setText(filmItems.getOverview());
 
 
-        Glide.with(context).load(filmItems.getGambar()).into(imageSampul);
+        Glide.with(context)
+                .load("https://image.tmdb.org/t/p/w342" + filmItems.getGambar())
+                .into(imageSampul);
 
 
     }
+
+
 }

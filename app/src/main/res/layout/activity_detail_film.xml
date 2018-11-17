@@ -3,10 +3,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:tool="http://schemas.android.com/tools"
     android:fillViewport="true"
-    android:scrollbars = "vertical"
-    android:scrollbarStyle="insideInset"
-    >
+    android:scrollbars="vertical"
+    android:scrollbarStyle="insideInset">
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -33,16 +33,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:text="Captain Underpants: The First Epic Movie"
+        tool:text="Captain Underpants: The First Epic Movie"
         android:textColor="@android:color/white"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/txt_tanggal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:text="Tanggal Rilis : 1935-12-28"
+        tool:text="Tanggal Rilis : 1935-12-28"
         android:layout_margin="@dimen/activity_horizontal_margin"/>
 
 
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="Score : "
+            android:text="@string/score"
             android:textColor="@android:color/white" />
         <TextView
             android:id="@+id/txt_skor"
@@ -68,7 +68,7 @@
             android:gravity="center"
             android:textColor="@android:color/white"
             android:orientation="vertical"
-            android:text="7.7" />
+            tool:text="7.7" />
 
     </LinearLayout>
 
@@ -76,16 +76,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:text="Preview"
+        android:text="@string/preview"
         android:textColor="@android:color/white"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/txt_overview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:text="Overvsadaiew"
+        tool:text="Overvsadaiew"
         android:textColor="@android:color/white" />
 </LinearLayout>
 

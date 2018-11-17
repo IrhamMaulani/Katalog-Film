@@ -20,19 +20,19 @@
             android:id="@+id/edit_film"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Masukan Judul Film "
+            android:hint="@string/search_hint"
             android:layout_weight="0.8"/>
         <Button
-            android:id="@+id/btn_kota"
+            android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search"
+            android:text="@string/search_button"
             android:layout_weight="0.2"
             />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_category"
+        android:id="@+id/rv_category_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/film_items"/>
