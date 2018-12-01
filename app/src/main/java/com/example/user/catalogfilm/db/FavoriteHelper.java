@@ -40,33 +40,18 @@ public class FavoriteHelper  {
         dataBaseHelper.close();
     }
 
-//    public ArrayList<FilmItems> getDatabyId(int idFilm){
-//
-////        String result = "";
-////        Cursor cursor = database.query(TABLE_FAVORITES, new String[]{ID + " = '" + idFilm + "'"}, null, null, null, null, null);
-////        cursor.moveToFirst();
-////        ArrayList<FilmItems> arrayList = new ArrayList<>();
-////        FilmItems filmItems;
-////        if (cursor.getCount()>0) {
-////            do {
-////                filmItems = new FilmItems();
-////                filmItems.setId(cursor.getInt(cursor.getColumnIndexOrThrow(ID)));
-////                filmItems.setJudul(cursor.getString(cursor.getColumnIndexOrThrow(JUDUL)));
-////                filmItems.setSkorFilm(cursor.getString(cursor.getColumnIndexOrThrow(SKORFILM)));
-////                filmItems.setTanggalRilis(cursor.getString(cursor.getColumnIndexOrThrow(TANGGAL)));
-////                filmItems.setOverview(cursor.getString(cursor.getColumnIndexOrThrow(DESCRIPTION)));
-////
-////                arrayList.add(filmItems);
-////                cursor.moveToNext();
-////
-////            } while (!cursor.isAfterLast());
-////        }
-////        cursor.close();
-////        return arrayList;
-//    }
+    public String getdataById(String nama){
+        
+       Cursor cursor =  database.query(DATABASE_TABLE,null,JUDUL+" LIKE ?",new String[]{nama},null,null,_ID + " ASC",null);
+       String judul = "JUDUL";
+        cursor.moveToFirst();
+//        cursor = cursor.getColumnIndex(JUDUL);
 
-    public Cursor getdataById(int id){
-        return database.query(TABLE_FAVORITES, new String[]{_ID + " = '" + id + "'"}, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            judul = cursor.getString(cursor.getColumnIndex(JUDUL ));
+        }
+        cursor.close();
+        return judul;
     }
 
 
@@ -102,7 +87,7 @@ public class FavoriteHelper  {
         return database.insert(DATABASE_TABLE, null, initialValues);
     }
 
-    public int delete(int id){
-        return database.delete(TABLE_FAVORITES, _ID + " = '"+id+"'", null);
+    public int delete(String judul){
+        return database.delete(TABLE_FAVORITES, JUDUL + " = '"+judul+"'", null);
     }
 }

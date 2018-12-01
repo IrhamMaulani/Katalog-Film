@@ -7,13 +7,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.user.catalogfilm.Adapter.FavoriteAdapter;
 import com.example.user.catalogfilm.Adapter.ListFilmAdapter;
 import com.example.user.catalogfilm.Model.FilmItems;
 import com.example.user.catalogfilm.R;
@@ -35,7 +38,7 @@ public class FavoritesFragment extends Fragment  {
     ProgressBar progressBar;
 
     private LinkedList<FilmItems> list;
-    private ListFilmAdapter adapter;
+    private FavoriteAdapter adapter;
     private FavoriteHelper favoriteHelper;
 
     public FavoritesFragment() {
@@ -49,14 +52,17 @@ public class FavoritesFragment extends Fragment  {
         View rootView = inflater.inflate(R.layout.film_list, container, false);
         ButterKnife.bind(this,rootView);
 
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setHasFixedSize(true);
+
         favoriteHelper = new FavoriteHelper(getContext());
 
         favoriteHelper.open();
 
         list = new LinkedList<>();
 
-        adapter = new ListFilmAdapter(getContext(),list);
-        adapter.setListFilm(list);
+        adapter = new FavoriteAdapter(getContext());
+        adapter.setListNotes(list);
         mRecyclerView.setAdapter(adapter);
 
         new LoadNoteAsync().execute();
@@ -86,12 +92,12 @@ public class FavoritesFragment extends Fragment  {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<FilmItems> notes) {
-            super.onPostExecute(notes);
+        protected void onPostExecute(ArrayList<FilmItems> filmItems) {
+            super.onPostExecute(filmItems);
             progressBar.setVisibility(View.GONE);
 
-            list.addAll(notes);
-            adapter.setListFilm(list);
+            list.addAll(filmItems);
+            adapter.setListNotes(list);
             adapter.notifyDataSetChanged();
 
             if (list.size() == 0){

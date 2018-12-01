@@ -18,9 +18,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.NoteViewholder>{
-    private LinkedList<FilmItems> listNotes;
-    private ArrayList<FilmItems> mData = new ArrayList<>();
-    private Context context;
+    public LinkedList<FilmItems> listNotes;
+    public Context context;
 
     public FavoriteAdapter(Context context) {
         this.context = context;
@@ -34,10 +33,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.NoteVi
         this.listNotes = listNotes;
     }
 
-    public void addItem(ArrayList<FilmItems> mData) {
-        this.mData = mData;
-        notifyDataSetChanged();
-    }
+
 
     @Override
     public NoteViewholder onCreateViewHolder(ViewGroup parent, int viewType) {

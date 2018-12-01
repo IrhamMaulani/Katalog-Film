@@ -38,6 +38,7 @@ public class DetailFilmActivity extends AppCompatActivity {
     public static int RESULT_UPDATE = 201;
     public static int RESULT_DELETE = 301;
     private FilmItems filmItems;
+    String coba;
 
     private FavoriteHelper favoriteHelper;
     @Override
@@ -49,7 +50,20 @@ public class DetailFilmActivity extends AppCompatActivity {
         favoriteHelper = new FavoriteHelper(this);
         favoriteHelper.open();
 
+
+
          filmItems = getIntent().getParcelableExtra(EXTRA_FILM);
+
+
+         coba = favoriteHelper.getdataById(filmItems.getJudul());
+        if(!coba.equals("JUDUL")) {
+            DrawableCompat.setTint(btnFavorite.getDrawable(), ContextCompat.getColor(getBaseContext(), R.color.Gold));
+        }else{
+            DrawableCompat.setTint(btnFavorite.getDrawable(), ContextCompat.getColor(getBaseContext(), R.color.White));
+        }
+
+
+
 
         textJudul.setText(filmItems.getJudul());
         textSkor.setText(filmItems.getSkorFilm());
@@ -63,17 +77,27 @@ public class DetailFilmActivity extends AppCompatActivity {
                 .load("https://image.tmdb.org/t/p/w342" + filmItems.getGambar())
                 .into(imageSampul);
 
-        Log.v("Tag","hehe" + filmItems.getId());
+
 
     }
 
     View.OnClickListener myListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-        favoriteHelper.insert(filmItems);
-            setResult(RESULT_ADD);
-            finish();
-            DrawableCompat.setTint(btnFavorite.getDrawable(), ContextCompat.getColor(getBaseContext(), R.color.Gold));
+            //Hapus favorites
+            if(!coba.equals("JUDUL")) {
+
+                Log.v("Tag","Heeee");
+                favoriteHelper.delete(coba);
+                DrawableCompat.setTint(btnFavorite.getDrawable(), ContextCompat.getColor(getBaseContext(), R.color.White));
+                coba = "JUDUL";
+            }else{
+
+                favoriteHelper.insert(filmItems);
+                setResult(RESULT_ADD);
+                finish();
+                DrawableCompat.setTint(btnFavorite.getDrawable(), ContextCompat.getColor(getBaseContext(), R.color.Gold));
+            }
         }
     };
 
