@@ -2,6 +2,7 @@ package com.example.user.catalogfilm.Fragment;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -32,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.example.user.catalogfilm.Activity.DetailFilmActivity.REQUEST_UPDATE;
+import static com.example.user.catalogfilm.db.DatabaseContract.CONTENT_URI;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,7 +44,8 @@ public class FavoritesFragment extends Fragment  {
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
 
-    private LinkedList<FilmItems> list;
+//    private LinkedList<FilmItems> list;
+    private Cursor list;
     private FavoriteAdapter adapter;
     private FavoriteHelper favoriteHelper;
 
@@ -64,7 +67,7 @@ public class FavoritesFragment extends Fragment  {
 
         favoriteHelper.open();
 
-        list = new LinkedList<>();
+
 
         adapter = new FavoriteAdapter(getContext());
         adapter.setListNotes(list);
@@ -80,44 +83,48 @@ public class FavoritesFragment extends Fragment  {
         super.onResume();
     }
 
-    private class LoadNoteAsync extends AsyncTask<Void, Void, ArrayList<FilmItems>> {
+    private class LoadNoteAsync extends AsyncTask<Void, Void, Cursor> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE);
 
-            if (list.size() > 0){
-                list.clear();
-            }
         }
 
         @Override
-        protected ArrayList<FilmItems> doInBackground(Void... voids) {
-            return favoriteHelper.query();
+        protected Cursor doInBackground(Void... voids) {
+            return getActivity().getContentResolver().query(CONTENT_URI,null,null,null,null);
         }
 
         @Override
-        protected void onPostExecute(ArrayList<FilmItems> filmItems) {
-            super.onPostExecute(filmItems);
+        protected void onPostExecute(Cursor films) {
+            super.onPostExecute(films);
             progressBar.setVisibility(View.GONE);
 
-            list.addAll(filmItems);
+            list = films;
             adapter.setListNotes(list);
             adapter.notifyDataSetChanged();
 
             ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                 @Override
                 public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                    showSelected(list.get(position));
+                    final FilmItems filmItems = getItem(position);
+                    showSelected(filmItems);
                 }
             });
 
-            if (list.size() == 0){
+            if (list.getCount() == 0){
                 showSnackbarMessage("Tidak ada data saat ini");
             }
         }
     }
 
+    private FilmItems getItem(int position){
+        if (!list.moveToPosition(position)) {
+            throw new IllegalStateException("Position invalid");
+        }
+        return new FilmItems(list);
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -145,13 +152,10 @@ public class FavoritesFragment extends Fragment  {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == DetailFilmActivity.RESULT_DELETE) {
-            int position = data.getIntExtra(DetailFilmActivity.EXTRA_POSITION, 0);
-            list.remove(position);
-            adapter.setListNotes(list);
-            adapter.notifyDataSetChanged();
+
+            new LoadNoteAsync().execute();
             showSnackbarMessage("Satu item berhasil dihapus");
-        }
+
     }
 
 }

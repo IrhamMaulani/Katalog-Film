@@ -21,6 +21,12 @@
         </activity>
         <activity android:name=".Activity.DetailFilmActivity"
             />
+        <provider
+            android:authorities="com.example.user.catalogfilm"
+            android:name=".provider.FilmProvider"
+            android:exported="true"
+            android:readPermission="com.dicoding.mynotesapp.READ_DATABASE"
+            android:writePermission="com.dicoding.mynotesapp.WRITE_DATABASE" />
     </application>
 
 </manifest>

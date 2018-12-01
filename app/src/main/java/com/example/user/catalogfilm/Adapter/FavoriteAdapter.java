@@ -3,6 +3,7 @@ package com.example.user.catalogfilm.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.NoteViewholder>{
-    public LinkedList<FilmItems> listNotes;
+    private Cursor listNotes;
     public Context context;
     String url = "https://image.tmdb.org/t/p/w185";
 
@@ -27,13 +28,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.NoteVi
         this.context = context;
     }
 
-    public LinkedList<FilmItems> getListNotes() {
-        return listNotes;
-    }
 
-    public void setListNotes(LinkedList<FilmItems> listNotes) {
+
+    public void setListNotes(Cursor  listNotes) {
         this.listNotes = listNotes;
     }
+
+
 
 
 
@@ -45,22 +46,36 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.NoteVi
 
     @Override
     public void onBindViewHolder(NoteViewholder holder, int position) {
-        holder.textViewJudulFilm.setText(getListNotes().get(position).getJudul());
-        holder.textViewDeskripsi.setText(getListNotes().get(position).getOverview());
-        holder.textViewWaktuRelease.setText(getListNotes().get(position).getTanggalRilis());
-        holder.textViewSkor.setText(getListNotes().get(position).getSkorFilm());
+        final FilmItems filmItems = getItem(position);
+        holder.textViewJudulFilm.setText(filmItems.getJudul());
+        holder.textViewDeskripsi.setText(filmItems.getOverview());
+        holder.textViewWaktuRelease.setText(filmItems.getTanggalRilis());
+        holder.textViewSkor.setText(filmItems.getSkorFilm());
 
         Context context = holder.gambarSampul.getContext();
 
         Glide.with(context)
-                .load(url + getListNotes().get(position).getGambar())
+                .load(url + filmItems.getGambar())
                 .into(holder.gambarSampul);
     }
 
+
+
     @Override
     public int getItemCount() {
-        return getListNotes().size();
+        if (listNotes == null) return 0;
+        return listNotes.getCount();
     }
+
+    private FilmItems getItem(int position) {
+        if (!listNotes.moveToPosition(position)){
+            throw new IllegalStateException("Position invalid");
+        }
+        return new FilmItems(listNotes);
+    }
+
+
+
 
     public class NoteViewholder extends RecyclerView.ViewHolder{
 

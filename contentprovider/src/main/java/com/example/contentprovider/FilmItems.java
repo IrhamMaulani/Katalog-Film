@@ -1,33 +1,34 @@
-package com.example.user.catalogfilm.Model;
+package com.example.contentprovider;
 
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.user.catalogfilm.db.DatabaseContract;
-import com.google.gson.annotations.SerializedName;
+
 
 import static android.provider.BaseColumns._ID;
-import static com.example.user.catalogfilm.db.DatabaseContract.getColumnInt;
-import static com.example.user.catalogfilm.db.DatabaseContract.getColumnString;
+import static com.example.contentprovider.DatabaseContract.getColumnInt;
+import static com.example.contentprovider.DatabaseContract.getColumnString;
+import static com.example.contentprovider.DatabaseContract.getColumnInt;
+import static com.example.contentprovider.DatabaseContract.getColumnString;
 
 public class FilmItems implements Parcelable {
-    @SerializedName("id")
+
     private int id;
 
-    @SerializedName("title")
+
     private String judul;
 
-    @SerializedName("overview")
+
     private String overview;
 
-    @SerializedName("release_date")
+
     private String tanggalRilis;
 
-    @SerializedName("poster_path")
+
     private String gambar;
 
-    @SerializedName("vote_average")
+
     private String skorFilm;
 
 
@@ -117,7 +118,7 @@ public class FilmItems implements Parcelable {
         this.skorFilm = in.readString();
     }
 
-    public static final Parcelable.Creator<FilmItems> CREATOR = new Parcelable.Creator<FilmItems>() {
+    public static final Creator<FilmItems> CREATOR = new Creator<FilmItems>() {
         @Override
         public FilmItems createFromParcel(Parcel source) {
             return new FilmItems(source);

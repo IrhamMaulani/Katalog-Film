@@ -1,4 +1,4 @@
-package com.example.user.catalogfilm.db;
+package com.example.contentprovider;
 
 import android.database.Cursor;
 import android.net.Uri;

@@ -93,4 +93,34 @@ public class FavoriteHelper  {
     public int delete(String judul){
         return database.delete(TABLE_FAVORITES, JUDUL + " = '"+judul+"'", null);
     }
+
+    public Cursor queryByJudulProvider(String nama){
+        return database.query(DATABASE_TABLE,null
+                ,_ID + " = ?"
+                ,new String[]{JUDUL}
+                ,null
+                ,null
+                ,null
+                ,null);
+    }
+    public Cursor queryProvider(){
+        return database.query(DATABASE_TABLE
+                ,null
+                ,null
+                ,null
+                ,null
+                ,null
+                ,_ID + " DESC");
+    }
+    public long insertProvider(ContentValues values){
+        return database.insert(DATABASE_TABLE,null,values);
+    }
+
+    public int updateProvider(String id,ContentValues values){
+        return database.update(DATABASE_TABLE,values,_ID +" = ?",new String[]{id} );
+    }
+
+    public int deleteProvider(String judul){
+        return database.delete(DATABASE_TABLE,JUDUL + " = ?", new String[]{judul});
+    }
 }

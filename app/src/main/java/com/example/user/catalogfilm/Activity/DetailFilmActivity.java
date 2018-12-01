@@ -1,6 +1,9 @@
 package com.example.user.catalogfilm.Activity;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +21,13 @@ import com.example.user.catalogfilm.db.FavoriteHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.user.catalogfilm.db.DatabaseContract.CONTENT_URI;
+import static com.example.user.catalogfilm.db.DatabaseContract.FavoritesColumns.DESCRIPTION;
+import static com.example.user.catalogfilm.db.DatabaseContract.FavoritesColumns.GAMBAR;
+import static com.example.user.catalogfilm.db.DatabaseContract.FavoritesColumns.JUDUL;
+import static com.example.user.catalogfilm.db.DatabaseContract.FavoritesColumns.SKORFILM;
+import static com.example.user.catalogfilm.db.DatabaseContract.FavoritesColumns.TANGGAL;
 
 
 public class DetailFilmActivity extends AppCompatActivity {
@@ -48,15 +58,26 @@ public class DetailFilmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_film);
         ButterKnife.bind(this);
 
+
+
         favoriteHelper = new FavoriteHelper(this);
         favoriteHelper.open();
 
+        Uri uri = getIntent().getData();
 
+        if (uri != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null){
+                if(cursor.moveToFirst()) filmItems = new FilmItems(cursor);
+                cursor.close();
+            }
+        }
 
          filmItems = getIntent().getParcelableExtra(EXTRA_FILM);
 
 
          coba = favoriteHelper.getdataById(filmItems.getJudul());
+
         if(!coba.equals("JUDUL")) {
             DrawableCompat.setTint(btnFavorite.getDrawable(), ContextCompat.getColor(getBaseContext(), R.color.Gold));
         }else{
@@ -88,15 +109,25 @@ public class DetailFilmActivity extends AppCompatActivity {
             //Hapus favorites
             if(!coba.equals("JUDUL")) {
 
-                Log.v("Tag","Heeee");
+
                 favoriteHelper.delete(coba);
+//                getContentResolver().delete(CONTENT_URI,coba,null);
                 DrawableCompat.setTint(btnFavorite.getDrawable(), ContextCompat.getColor(getBaseContext(), R.color.White));
                 coba = "JUDUL";
                 setResult(RESULT_DELETE);
                 finish();
             }else{
 
-                favoriteHelper.insert(filmItems);
+                ContentValues values = new ContentValues();
+                values.put(JUDUL,filmItems.getJudul());
+                values.put(SKORFILM,filmItems.getSkorFilm());
+                values.put(TANGGAL,filmItems.getTanggalRilis());
+                values.put(DESCRIPTION,filmItems.getOverview());
+                values.put(GAMBAR,filmItems.getGambar());
+                Log.v("Tag","Heeee");
+//                favoriteHelper.delete(coba);
+
+                getContentResolver().insert(CONTENT_URI,values);
                 setResult(RESULT_ADD);
                 finish();
                 DrawableCompat.setTint(btnFavorite.getDrawable(), ContextCompat.getColor(getBaseContext(), R.color.Gold));
