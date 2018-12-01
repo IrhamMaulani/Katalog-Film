@@ -31,6 +31,14 @@
             />
     </LinearLayout>
 
+    <ProgressBar
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/progressbar"
+        android:layout_gravity = "center"
+        android:visibility="invisible"
+       />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_category_search"
         android:layout_width="match_parent"

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.user.catalogfilm.Activity.DetailFilmActivity;
@@ -39,6 +40,8 @@ public class UpcomingFragment extends Fragment  {
 
     @BindView(R.id.rv_category)
     RecyclerView mRecyclerView;
+    @BindView(R.id.progressbar)
+    ProgressBar progressBar;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public static FragmentActivity ma;
@@ -90,11 +93,15 @@ public class UpcomingFragment extends Fragment  {
             @Override
             public void onResponse(Call<GetFilmItems> call, Response<GetFilmItems>
                     response) {
+                if(progressBar.getVisibility() == View.VISIBLE){
+                    progressBar.setVisibility(View.GONE);
+                }
                 final List<FilmItems> kontakList = response.body().getListDataFilm();
                 Log.d("Retrofit Get", "Jumlah data : " +
                         String.valueOf(kontakList.size()));
                 mAdapter = new ListFilmAdapter(kontakList);
                 mRecyclerView.setAdapter(mAdapter);
+
 
                 ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
@@ -115,19 +122,15 @@ public class UpcomingFragment extends Fragment  {
     }
 
     private void showSelected(FilmItems filmItems){
-//        Toast.makeText(getContext(), "Kamu memilih "+filmItems.getJudul(), Toast.LENGTH_SHORT).show();
         filmItems.setJudul(filmItems.getJudul());
         filmItems.setOverview(filmItems.getOverview());
         filmItems.setTanggalRilis(filmItems.getTanggalRilis());
         filmItems.setSkorFilm(filmItems.getSkorFilm());
         filmItems.setGambar(filmItems.getGambar());
+        filmItems.setId(filmItems.getId());
         Intent moveWithObjectIntent = new Intent(getContext(), DetailFilmActivity.class);
         moveWithObjectIntent.putExtra(DetailFilmActivity.EXTRA_FILM, filmItems);
-        getContext().startActivity(moveWithObjectIntent);
-
-
-
-
+        startActivity(moveWithObjectIntent);
     }
 
 

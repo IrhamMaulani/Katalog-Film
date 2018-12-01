@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.user.catalogfilm.Activity.DetailFilmActivity;
@@ -53,6 +54,8 @@ public class SearchFilmFragment extends Fragment {
     EditText textPencarian ;
     @BindView(R.id.btn_search)
     Button buttonPencarian;
+    @BindView(R.id.progressbar)
+    ProgressBar progressBar;
 
 
     public SearchFilmFragment() {
@@ -90,12 +93,17 @@ public class SearchFilmFragment extends Fragment {
 
     public void getData(String film){
         if (TextUtils.isEmpty(film))return;
+        progressBar.setVisibility(View.VISIBLE);
 
         Call<GetFilmItems> call = mApiInterface.getSearchFilm(film);
         call.enqueue(new Callback<GetFilmItems>() {
             @Override
             public void onResponse(Call<GetFilmItems> call, Response<GetFilmItems>
                     response) {
+                if(progressBar.getVisibility() == View.VISIBLE){
+                    progressBar.setVisibility(View.GONE);
+                }
+
                final List<FilmItems> kontakList = response.body().getListDataFilm();
                 Log.d("Retrofit Get", "Jumlah data: " +
                         String.valueOf(kontakList.size()));

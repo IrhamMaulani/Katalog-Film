@@ -32,6 +32,10 @@ public class ListFilmAdapter extends RecyclerView.Adapter<ListFilmAdapter.Catego
         this.context = context;
     }
 
+    public void setListFilm(List<FilmItems> filmList) {
+        this.filmList = filmList;
+    }
+
 
     @Override
     public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,7 +51,6 @@ public class ListFilmAdapter extends RecyclerView.Adapter<ListFilmAdapter.Catego
         holder.textViewDeskripsi.setText(filmList.get(position).getOverview());
         holder.textViewWaktuRelease.setText(filmList.get(position).getTanggalRilis());
         holder.textViewSkor.setText(filmList.get(position).getSkorFilm());
-
 
         Context context = holder.gambarSampul.getContext();
 
@@ -80,7 +83,7 @@ public class ListFilmAdapter extends RecyclerView.Adapter<ListFilmAdapter.Catego
             super(itemView);
             textViewJudulFilm = (TextView)itemView.findViewById(R.id.judul_film);
             textViewDeskripsi = (TextView)itemView.findViewById(R.id.deskripsi);
-            textViewWaktuRelease = (TextView)itemView.findViewById(R.id.waktu_release); ;
+            textViewWaktuRelease = (TextView)itemView.findViewById(R.id.waktu_release);
             textViewSkor = (TextView)itemView.findViewById(R.id.skor);
             gambarSampul = (ImageView)itemView.findViewById(R.id.img_view_film_item);
         }
