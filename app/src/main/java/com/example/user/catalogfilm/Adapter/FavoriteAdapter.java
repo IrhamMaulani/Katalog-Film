@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.user.catalogfilm.Model.FilmItems;
 import com.example.user.catalogfilm.R;
 
@@ -20,6 +21,7 @@ import java.util.LinkedList;
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.NoteViewholder>{
     public LinkedList<FilmItems> listNotes;
     public Context context;
+    String url = "https://image.tmdb.org/t/p/w185";
 
     public FavoriteAdapter(Context context) {
         this.context = context;
@@ -47,6 +49,12 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.NoteVi
         holder.textViewDeskripsi.setText(getListNotes().get(position).getOverview());
         holder.textViewWaktuRelease.setText(getListNotes().get(position).getTanggalRilis());
         holder.textViewSkor.setText(getListNotes().get(position).getSkorFilm());
+
+        Context context = holder.gambarSampul.getContext();
+
+        Glide.with(context)
+                .load(url + getListNotes().get(position).getGambar())
+                .into(holder.gambarSampul);
     }
 
     @Override

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import static android.os.Build.ID;
 import static android.provider.BaseColumns._ID;
 import static com.example.user.catalogfilm.db.DatabaseContract.FavoritesColumns.DESCRIPTION;
+import static com.example.user.catalogfilm.db.DatabaseContract.FavoritesColumns.GAMBAR;
 import static com.example.user.catalogfilm.db.DatabaseContract.FavoritesColumns.JUDUL;
 import static com.example.user.catalogfilm.db.DatabaseContract.FavoritesColumns.SKORFILM;
 import static com.example.user.catalogfilm.db.DatabaseContract.FavoritesColumns.TANGGAL;
@@ -69,6 +70,7 @@ public class FavoriteHelper  {
                 filmItems.setSkorFilm(cursor.getString(cursor.getColumnIndexOrThrow(SKORFILM)));
                 filmItems.setTanggalRilis(cursor.getString(cursor.getColumnIndexOrThrow(TANGGAL)));
                 filmItems.setOverview(cursor.getString(cursor.getColumnIndexOrThrow(DESCRIPTION)));
+                filmItems.setGambar(cursor.getString(cursor.getColumnIndexOrThrow(GAMBAR)));
                 arrayList.add(filmItems);
                 cursor.moveToNext();
 
@@ -84,6 +86,7 @@ public class FavoriteHelper  {
         initialValues.put(SKORFILM, filmItems.getSkorFilm());
         initialValues.put(TANGGAL, filmItems.getTanggalRilis());
         initialValues.put(DESCRIPTION, filmItems.getOverview());
+        initialValues.put(GAMBAR, filmItems.getGambar());
         return database.insert(DATABASE_TABLE, null, initialValues);
     }
 

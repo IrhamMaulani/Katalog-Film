@@ -13,13 +13,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL," +
+                    " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL)",
             DatabaseContract.TABLE_FAVORITES,
             DatabaseContract.FavoritesColumns._ID,
             DatabaseContract.FavoritesColumns.JUDUL,
             DatabaseContract.FavoritesColumns.SKORFILM,
             DatabaseContract.FavoritesColumns.TANGGAL,
-            DatabaseContract.FavoritesColumns.DESCRIPTION
+            DatabaseContract.FavoritesColumns.DESCRIPTION,
+            DatabaseContract.FavoritesColumns.GAMBAR
     );
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

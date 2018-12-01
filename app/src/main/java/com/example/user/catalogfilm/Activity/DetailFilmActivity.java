@@ -24,6 +24,7 @@ public class DetailFilmActivity extends AppCompatActivity {
 
 
     public static String EXTRA_FILM= "extra_person";
+    public static String EXTRA_POSITION = "extra_position";
 
 
     @BindView(R.id.txt_judul) TextView textJudul;
@@ -91,6 +92,8 @@ public class DetailFilmActivity extends AppCompatActivity {
                 favoriteHelper.delete(coba);
                 DrawableCompat.setTint(btnFavorite.getDrawable(), ContextCompat.getColor(getBaseContext(), R.color.White));
                 coba = "JUDUL";
+                setResult(RESULT_DELETE);
+                finish();
             }else{
 
                 favoriteHelper.insert(filmItems);

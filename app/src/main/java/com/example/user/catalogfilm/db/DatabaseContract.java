@@ -18,5 +18,7 @@ public class DatabaseContract {
         //favorites description
         static String DESCRIPTION = "description";
 
+        static String GAMBAR = "gambar";
+
     }
 }
