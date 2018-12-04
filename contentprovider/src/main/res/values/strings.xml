@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ContentProvider</string>
+    <string name="date">date</string>
+    <string name="title">judul</string>
+    <string name="description">description</string>
+    <string name="buat_baru">Buat Baru</string>
+</resources>

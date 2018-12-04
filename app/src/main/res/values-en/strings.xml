@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">CatalogFilm</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="now_playing">NOW PLAYING</string>
+    <string name="upcoming">UPCOMING</string>
+    <string name="search_film">SEARCH</string>
+    <string name="search_hint">Insert Film Title</string>
+    <string name="search_button">Search</string>
+    <string name="release_date">Release Date :</string>
+    <string name="english">English</string>
+    <string name="indonesia">Indonesia</string>
+    <string name="local">Change Languange</string>
+    <string name="preview">Preview</string>
+    <string name="score">Score :</string>
+</resources>

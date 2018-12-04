@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">KatalogFilm</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="now_playing">SEDANG TAYANG</string>
+    <string name="upcoming">SEGERA</string>
+    <string name="search_film">CARI</string>
+    <string name="search_hint">Masukan Judul Film</string>
+    <string name="search_button">Cari</string>
+    <string name="release_date">Tanggal Rilis :</string>
+    <string name="english">English</string>
+    <string name="indonesia">Indonesia</string>
+    <string name="local">Ganti Bahasa</string>
+    <string name="preview">Pratinjau</string>
+    <string name="score">Rating :</string>
+</resources>
