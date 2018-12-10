@@ -84,6 +84,7 @@ public class FilmItems implements Parcelable {
     }
 
 
+
     @Override
     public int describeContents() {
         return 0;

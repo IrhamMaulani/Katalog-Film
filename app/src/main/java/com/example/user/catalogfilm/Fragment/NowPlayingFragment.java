@@ -3,8 +3,11 @@ package com.example.user.catalogfilm.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -44,10 +47,11 @@ public class NowPlayingFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public static FragmentActivity ma;
-    private List<FilmItems> kontakList = new ArrayList<>();
+    private List<FilmItems> filmList = new ArrayList<>();
     private ListFilmAdapter viewAdapter;
     private ApiInterface mApiInterface;
     private String statusFilm ;
+     List<FilmItems> kontakList;
 
     public NowPlayingFragment() {
         // Required empty public constructor
@@ -60,19 +64,22 @@ public class NowPlayingFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.film_list, container, false);
         ButterKnife.bind(this,rootView);
         mRecyclerView.setHasFixedSize(true);
-        viewAdapter = new ListFilmAdapter(getContext(), kontakList);
+        viewAdapter = new ListFilmAdapter(getContext(), filmList);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(viewAdapter);
-
-
-
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         ma=getActivity();
 
-        getData();
 
 
+        if(savedInstanceState == null){
+          getData();
+        }else {
+            filmList = savedInstanceState.getParcelableArrayList("films");
+            viewAdapter.setListFilm(filmList);
+            generateFilm(filmList);
+        }
 
         return rootView;
     }
@@ -86,17 +93,16 @@ public class NowPlayingFragment extends Fragment {
                 if(progressBar.getVisibility() == View.VISIBLE){
                     progressBar.setVisibility(View.GONE);
                 }
-                final List<FilmItems> kontakList = response.body().getListDataFilm();
-                Log.d("Retrofit Get", "Jumlah data : " +
-                        String.valueOf(kontakList.size()));
-                mAdapter = new ListFilmAdapter(kontakList);
-                mRecyclerView.setAdapter(mAdapter);
+                filmList = response.body().getListDataFilm();
+                generateFilm(filmList);
+//                mAdapter = new ListFilmAdapter(filmList);
+//                mRecyclerView.setAdapter(mAdapter);
 
 
                 ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        showSelected(kontakList.get(position));
+                        showSelected(filmList.get(position));
                     }
                 });
             }
@@ -107,8 +113,15 @@ public class NowPlayingFragment extends Fragment {
             }
 
         });
+    }
 
+    private void generateFilm(List<FilmItems> films) {
+        viewAdapter = new ListFilmAdapter(getContext(), films);
 
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(viewAdapter);
+        progressBar.setVisibility(View.GONE);
     }
 
     private void showSelected(FilmItems filmItems){
@@ -118,4 +131,14 @@ public class NowPlayingFragment extends Fragment {
         startActivity(moveWithObjectIntent);
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+       outState.putParcelableArrayList("films",new ArrayList <>(viewAdapter.getFilmList()));
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
 }

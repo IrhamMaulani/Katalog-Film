@@ -32,7 +32,7 @@ import java.util.LinkedList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.example.user.catalogfilm.Activity.DetailFilmActivity.REQUEST_UPDATE;
+
 import static com.example.user.catalogfilm.db.DatabaseContract.CONTENT_URI;
 
 /**

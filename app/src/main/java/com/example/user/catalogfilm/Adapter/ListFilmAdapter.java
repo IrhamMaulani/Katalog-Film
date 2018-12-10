@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.user.catalogfilm.Fragment.NowPlayingFragment;
 import com.example.user.catalogfilm.Model.FilmItems;
 import com.example.user.catalogfilm.R;
 
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class ListFilmAdapter extends RecyclerView.Adapter<ListFilmAdapter.CategoryViewHolder>{
     private Context context;
-    List<FilmItems> filmList;
+   private List<FilmItems> filmList;
 
     String url = "https://image.tmdb.org/t/p/w185";
 
@@ -30,12 +31,18 @@ public class ListFilmAdapter extends RecyclerView.Adapter<ListFilmAdapter.Catego
 
     public  ListFilmAdapter(Context context, List<FilmItems> filmList){
         this.context = context;
+        this.filmList = filmList;
     }
+
+
 
     public void setListFilm(List<FilmItems> filmList) {
         this.filmList = filmList;
     }
 
+    public List<FilmItems> getFilmList() {
+        return filmList;
+    }
 
     @Override
     public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -70,6 +77,8 @@ public class ListFilmAdapter extends RecyclerView.Adapter<ListFilmAdapter.Catego
 
         return filmList.size();
     }
+
+
 
     class CategoryViewHolder extends RecyclerView.ViewHolder{
 
