@@ -3,6 +3,7 @@ package com.example.user.catalogfilm.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.user.catalogfilm.Activity.DetailFilmActivity;
 import com.example.user.catalogfilm.Activity.MainActivity;
@@ -46,9 +48,10 @@ public class SearchFilmFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public static FragmentActivity ma;
-    private List<FilmItems> kontakList = new ArrayList<>();
+    private ArrayList<FilmItems> filmList = new ArrayList<>();
     private ListFilmAdapter viewAdapter;
     private ApiInterface mApiInterface;
+    private String films = "FILMS";
     private String film = "TEXT_PENCARIAN";
     @BindView(R.id.edit_film)
     EditText textPencarian ;
@@ -77,7 +80,7 @@ public class SearchFilmFragment extends Fragment {
 
         film = textPencarian.getText().toString();
 
-        viewAdapter = new ListFilmAdapter(getContext(), kontakList);
+        viewAdapter = new ListFilmAdapter(getContext(), filmList);
 
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -86,7 +89,17 @@ public class SearchFilmFragment extends Fragment {
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         ma=getActivity();
 
-//        getData(film);
+        if(savedInstanceState != null){
+
+            filmList = savedInstanceState.getParcelableArrayList(films);
+
+            if(filmList.size() == 0){
+                getData("");
+            }
+            generateFilm(filmList);
+        }else {
+            getData("");
+        }
 
         return rootView;
     }
@@ -103,18 +116,13 @@ public class SearchFilmFragment extends Fragment {
                 if(progressBar.getVisibility() == View.VISIBLE){
                     progressBar.setVisibility(View.GONE);
                 }
+                if (response.isSuccessful()) {
+                    filmList = (ArrayList<FilmItems>) response.body().getListDataFilm();
+                    generateFilm(filmList);
+                }else {
+                    Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_LONG).show();
+                }
 
-               final List<FilmItems> kontakList = response.body().getListDataFilm();
-                Log.d("Retrofit Get", "Jumlah data: " +
-                        String.valueOf(kontakList.size()));
-                mAdapter = new ListFilmAdapter(kontakList);
-                mRecyclerView.setAdapter(mAdapter);
-                ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        showSelected(kontakList.get(position));
-                    }
-                });
 
             }
 
@@ -124,9 +132,23 @@ public class SearchFilmFragment extends Fragment {
             }
 
         });
-
-
     }
+
+    private void generateFilm(List<FilmItems> films) {
+        viewAdapter = new ListFilmAdapter(getContext(), films);
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(viewAdapter);
+        progressBar.setVisibility(View.GONE);
+
+        ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                showSelected(filmList.get(position));
+            }
+        });
+    }
+
 
     View.OnClickListener myListener = new View.OnClickListener() {
         @Override
@@ -136,8 +158,6 @@ public class SearchFilmFragment extends Fragment {
             if (TextUtils.isEmpty(film))return;
 
             getData(film);
-
-
         }
     };
 
@@ -146,9 +166,12 @@ public class SearchFilmFragment extends Fragment {
 
         moveWithObjectIntent.putExtra(DetailFilmActivity.EXTRA_FILM, filmItems);
         getContext().startActivity(moveWithObjectIntent);
-
-
-
-
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelableArrayList(films, filmList);
+        super.onSaveInstanceState(outState);
+    }
+
 }

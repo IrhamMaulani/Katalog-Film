@@ -106,4 +106,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="favorite">Favorite</string>
+    <string name="error">Data Sedang Tidak Ada</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

@@ -141,16 +141,17 @@ public class FavoritesFragment extends Fragment  {
 
         Intent moveWithObjectIntent = new Intent(getContext(), DetailFilmActivity.class);
         moveWithObjectIntent.putExtra(DetailFilmActivity.EXTRA_FILM, filmItems);
-        startActivity(moveWithObjectIntent);
+        startActivityForResult(moveWithObjectIntent, DetailFilmActivity.REQUEST_ADD);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if (resultCode == DetailFilmActivity.RESULT_UPDATE) {
             new LoadNoteAsync().execute();
-            showSnackbarMessage("Satu item berhasil dihapus");
-
+            showSnackbarMessage("Telah Di upadte");
+        }
     }
 
 }

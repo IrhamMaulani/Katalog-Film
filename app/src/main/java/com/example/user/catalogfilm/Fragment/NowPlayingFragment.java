@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.user.catalogfilm.Activity.DetailFilmActivity;
 import com.example.user.catalogfilm.Adapter.ListFilmAdapter;
@@ -47,11 +48,12 @@ public class NowPlayingFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public static FragmentActivity ma;
-    private List<FilmItems> filmList = new ArrayList<>();
+//    private List<FilmItems> filmList = new ArrayList<>();
     private ListFilmAdapter viewAdapter;
     private ApiInterface mApiInterface;
-    private String statusFilm ;
-     List<FilmItems> kontakList;
+    private String films = "FILM" ;
+    private ArrayList<FilmItems> filmList = new ArrayList<>();
+
 
     public NowPlayingFragment() {
         // Required empty public constructor
@@ -71,14 +73,16 @@ public class NowPlayingFragment extends Fragment {
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         ma=getActivity();
 
+        if(savedInstanceState != null){
 
+            filmList = savedInstanceState.getParcelableArrayList(films);
 
-        if(savedInstanceState == null){
-          getData();
-        }else {
-            filmList = savedInstanceState.getParcelableArrayList("films");
-            viewAdapter.setListFilm(filmList);
+            if(filmList.size() == 0){
+                getData();
+            }
             generateFilm(filmList);
+        }else {
+            getData();
         }
 
         return rootView;
@@ -93,18 +97,12 @@ public class NowPlayingFragment extends Fragment {
                 if(progressBar.getVisibility() == View.VISIBLE){
                     progressBar.setVisibility(View.GONE);
                 }
-                filmList = response.body().getListDataFilm();
-                generateFilm(filmList);
-//                mAdapter = new ListFilmAdapter(filmList);
-//                mRecyclerView.setAdapter(mAdapter);
-
-
-                ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        showSelected(filmList.get(position));
-                    }
-                });
+                if (response.isSuccessful()) {
+                    filmList = (ArrayList<FilmItems>) response.body().getListDataFilm();
+                    generateFilm(filmList);
+                }else {
+                    Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
@@ -117,11 +115,17 @@ public class NowPlayingFragment extends Fragment {
 
     private void generateFilm(List<FilmItems> films) {
         viewAdapter = new ListFilmAdapter(getContext(), films);
-
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(viewAdapter);
         progressBar.setVisibility(View.GONE);
+
+        ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                showSelected(filmList.get(position));
+            }
+        });
     }
 
     private void showSelected(FilmItems filmItems){
@@ -133,12 +137,15 @@ public class NowPlayingFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelableArrayList(films, filmList);
         super.onSaveInstanceState(outState);
-       outState.putParcelableArrayList("films",new ArrayList <>(viewAdapter.getFilmList()));
+
+
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onDetach() {
+        super.onDetach();
+
     }
 }

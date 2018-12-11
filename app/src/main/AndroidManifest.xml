@@ -25,8 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.DetailFilmActivity"
-            android:theme="@style/NoActionBarTheme"/>
+        <activity
+            android:name=".Activity.DetailFilmActivity"
+            android:theme="@style/NoActionBarTheme" />
 
         <provider
             android:name=".provider.FilmProvider"
@@ -35,6 +36,15 @@
             android:readPermission="com.example.user.catalogfilm.READ_DATABASE"
             android:writePermission="com.example.user.catalogfilm.WRITE_DATABASE" />
 
+        <receiver android:name=".FavoriteMovieWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_movie_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
