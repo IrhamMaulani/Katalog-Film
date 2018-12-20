@@ -108,13 +108,12 @@ public class DetailFilmActivity extends AppCompatActivity {
         public void onClick(View v) {
             //Hapus favorites
             if(!coba.equals("JUDUL")) {
-
-
                 favoriteHelper.delete(coba);
 //                getContentResolver().delete(CONTENT_URI,coba,null);
                 DrawableCompat.setTint(btnFavorite.getDrawable(), ContextCompat.getColor(getBaseContext(), R.color.White));
                 coba = "JUDUL";
                 setResult(RESULT_DELETE);
+
                 finish();
             }else{
 

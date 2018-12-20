@@ -151,6 +151,9 @@ public class FavoritesFragment extends Fragment  {
         if (resultCode == DetailFilmActivity.RESULT_UPDATE) {
             new LoadNoteAsync().execute();
             showSnackbarMessage("Telah Di upadte");
+        }else if(resultCode == DetailFilmActivity.RESULT_DELETE){
+            new LoadNoteAsync().execute();
+            showSnackbarMessage("Telah Di Delete");
         }
     }
 
