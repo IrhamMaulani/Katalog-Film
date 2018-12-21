@@ -95,7 +95,7 @@ public class StackRemoteViewsFactory  implements
         }catch (InterruptedException | ExecutionException e){
             Log.d("Widget Load Error","error");
         }
-        Log.v("AAA","isi : "+ url + item.getGambar());
+
         remoteViews.setImageViewBitmap(R.id.imageView,bmp);
 
         Bundle extras = new Bundle();

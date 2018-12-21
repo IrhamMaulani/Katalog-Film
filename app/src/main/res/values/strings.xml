@@ -17,5 +17,10 @@
     <string name="empty_text">EMPTY</string>
     <string name="favorite">FAVORITE</string>
     <string name="error">ERROR</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="release_today_reminder">Release Today Reminder</string>
+    <string name="setting">Setting</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
 
 </resources>

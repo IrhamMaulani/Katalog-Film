@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +52,7 @@ public class DetailFilmActivity extends AppCompatActivity {
     public static int RESULT_DELETE = 301;
     private FilmItems filmItems;
     String coba;
+    static final String VALUE_INTENT = "value_intent";
 
     private FavoriteHelper favoriteHelper;
     @Override
@@ -63,6 +66,13 @@ public class DetailFilmActivity extends AppCompatActivity {
         favoriteHelper = new FavoriteHelper(this);
         favoriteHelper.open();
 
+        if(savedInstanceState != null){
+            filmItems = savedInstanceState.getParcelable(VALUE_INTENT);
+
+        }else{
+            filmItems = getIntent().getParcelableExtra(EXTRA_FILM);
+        }
+
         Uri uri = getIntent().getData();
 
         if (uri != null) {
@@ -73,7 +83,7 @@ public class DetailFilmActivity extends AppCompatActivity {
             }
         }
 
-         filmItems = getIntent().getParcelableExtra(EXTRA_FILM);
+
 
 
          coba = favoriteHelper.getdataById(filmItems.getJudul());
@@ -83,9 +93,6 @@ public class DetailFilmActivity extends AppCompatActivity {
         }else{
             DrawableCompat.setTint(btnFavorite.getDrawable(), ContextCompat.getColor(getBaseContext(), R.color.White));
         }
-
-
-
 
         textJudul.setText(filmItems.getJudul());
         textSkor.setText(filmItems.getSkorFilm());
@@ -135,4 +142,10 @@ public class DetailFilmActivity extends AppCompatActivity {
     };
 
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelable(VALUE_INTENT, filmItems);
+        super.onSaveInstanceState(outState);
+
+    }
 }

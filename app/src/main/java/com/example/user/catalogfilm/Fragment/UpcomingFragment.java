@@ -108,6 +108,7 @@ public class UpcomingFragment extends Fragment  {
                 if (response.isSuccessful()) {
                     filmList = (ArrayList<FilmItems>) response.body().getListDataFilm();
                     generateFilm(filmList);
+
                 }else {
                     Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_LONG).show();
                 }
@@ -119,6 +120,8 @@ public class UpcomingFragment extends Fragment  {
             }
 
         });
+
+
     }
 
     private void generateFilm(List<FilmItems> films) {

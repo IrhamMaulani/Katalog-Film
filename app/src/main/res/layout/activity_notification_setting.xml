@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/daily_reminder"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:textSize="20sp"/>
+
+<Switch
+    android:id="@+id/switch_daily_reminder"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/activity_vertical_margin"
+    app:showText = "true"
+    android:textOn="@string/on"
+    android:textOff="@string/off"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/release_today_reminder"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:textSize="20sp"/>
+
+    <Switch
+        android:id="@+id/switch_today_reminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        app:showText = "true"
+        android:textOn="@string/on"
+        android:textOff="@string/off"/>
+
+
+
+
+</LinearLayout>
